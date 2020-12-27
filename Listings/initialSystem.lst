@@ -1,0 +1,97 @@
+C51 COMPILER V9.59.0.0   INITIALSYSTEM                                                     12/20/2020 19:27:48 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE INITIALSYSTEM
+OBJECT MODULE PLACED IN .\Objects\initialSystem.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE code\initialSystem.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\include) DEBUG OB
+                    -JECTEXTEND PRINT(.\Listings\initialSystem.lst) TABS(2) OBJECT(.\Objects\initialSystem.obj)
+
+line level    source
+
+   1          
+   2          
+   3          
+   4          
+   5          #include "all.h"
+   6          
+   7          
+   8          
+   9          unsigned char WorkStatusValue;
+  10          
+  11          
+  12          void InitialSystem(void)
+  13          {
+  14   1        unsigned char i;
+  15   1        unsigned int BatteryVoltage;
+  16   1        InitialIOPort();
+  17   1        InitialChangeValue();
+  18   1        Uart0_Init();
+  19   1        DisalbePrintf();
+  20   1        BatteryVoltage = AdcResult(BatteryAdcChannel);
+  21   1          //BatteryVoltage = 1000;
+  22   1        EnablePrintf();
+  23   1        printf("BatteryValtage = %d \n", BatteryVoltage);
+  24   1        //DelayUs(200);
+  25   1      
+  26   1        DelayUs(200);
+  27   1        for (i = 0; i < 50; ++i)
+  28   1        {
+  29   2          DelayUs(200);
+  30   2        }
+  31   1        MotorWorkLed = 0;
+  32   1        EA = 1;
+  33   1      
+  34   1      }
+  35          
+  36          
+  37          
+  38          void InitialChangeValue(void)
+  39          {
+  40   1        WorkStatusValue = SleepStatus;
+  41   1        MotorWorkTimer = 0;
+  42   1      }
+  43          
+  44          
+  45          
+  46          void InitialIOPort(void)
+  47          {
+  48   1        P0CON = 0xFF;  //设置P0为强推挽模式
+  49   1        P0PH  = 0x00;
+  50   1        P1CON = 0xFF;  //设置P1为强推挽模式
+  51   1        P1PH  = 0x00;
+  52   1        P2CON = 0xFF;  //设置P2为强推挽模式
+  53   1        P2PH  = 0x00;
+  54   1        
+C51 COMPILER V9.59.0.0   INITIALSYSTEM                                                     12/20/2020 19:27:48 PAGE 2   
+
+  55   1        //P1CON = 0x00;  //设置P1为高阻输入模式
+  56   1        //P1PH  = 0x00;
+  57   1        //P2CON = 0x00;  //设置P2为高阻带上拉模式
+  58   1        //P2PH  = 0xFF;
+  59   1        SC92F7251_NIO_Init(); //未引出IO口配置
+  60   1        MotorControlInA = 0; 
+  61   1        MotorControlInB = 0;
+  62   1        MotorWorkLed = 1;
+  63   1        //Lm393PowerPin = 1; 
+  64   1        //MotorWorkLed = 0;
+  65   1        IrWorkPin = 1;
+  66   1        P1CON &= 0XFE;     //中断IO INT00口设置为高阻输入
+  67   1        P1PH  |= 0x01;     //中断IO口设置为高阻带上拉
+  68   1        
+  69   1      
+  70   1      }
+  71          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    121    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

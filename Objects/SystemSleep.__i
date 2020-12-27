@@ -1,0 +1,1 @@
+"code\SystemSleep.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\include) DEBUG OBJECTEXTEND PRINT(.\Listings\SystemSleep.lst) TABS (2) OBJECT(.\Objects\SystemSleep.obj)

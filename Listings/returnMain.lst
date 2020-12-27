@@ -1,0 +1,71 @@
+C51 COMPILER V9.59.0.0   RETURNMAIN                                                        12/20/2020 19:27:49 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE RETURNMAIN
+OBJECT MODULE PLACED IN .\Objects\returnMain.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE code\returnMain.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\include) DEBUG OBJEC
+                    -TEXTEND PRINT(.\Listings\returnMain.lst) TABS(2) OBJECT(.\Objects\returnMain.obj)
+
+line level    source
+
+   1          /*
+   2          使用1.5版本主板
+   3          使用最6V的马达，兼容到4.5V的工作电压
+   4          使用两个软件版本，主要是针对碱性电池与镍氢电池时候不同的低电压的状况进�
+             -��判读
+   5          增加一个2CM与5CM的距离修改，这个需要配合，如果上电时候，直接按住红外头不�
+             -��，2S后进入到修改状态
+   6          修改的状态将写入到EEPROM,以后工作起来后将按照这个距离在处理
+   7          */
+   8          
+   9          
+  10          #include "all.h"
+  11          
+  12          
+  13          
+  14          void main (void)
+  15          {
+  16   1      
+  17   1        InitialSystem();
+  18   1        EnablePrintf();
+  19   1        printf("Begin to work,MCU go into main loop!\n");
+  20   1        while(1)
+  21   1        {
+  22   2          FeedToWatchDog();
+  23   2          switch (WorkStatusValue)
+  24   2          {
+  25   3            case SleepStatus:
+  26   3              SleepProcess();
+  27   3              break;
+  28   3            //case CheckIRStatus:
+  29   3            //  CheckIrProcess();   //WorkStatusValue = SleepStatus;
+  30   3            //  break;
+  31   3            case MotorWorkStatus:
+  32   3              MotorWorkProcess();   
+  33   3              break;
+  34   3            case LowPowerStatus:
+  35   3              lowerPowerProcess();
+  36   3              break;
+  37   3            
+  38   3            
+  39   3            default:
+  40   3              break;
+  41   3          }
+  42   2        }
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     46    ----
+   CONSTANT SIZE    =     38    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.59.0.0   RETURNMAIN                                                        12/20/2020 19:27:49 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

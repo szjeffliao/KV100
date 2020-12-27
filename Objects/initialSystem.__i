@@ -1,0 +1,1 @@
+"code\initialSystem.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\include) DEBUG OBJECTEXTEND PRINT(.\Listings\initialSystem.lst) TABS (2) OBJECT(.\Objects\initialSystem.obj)

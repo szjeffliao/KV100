@@ -1,0 +1,111 @@
+C51 COMPILER V9.59.0.0   UART                                                              12/20/2020 19:27:48 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\Objects\Uart.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE code\Uart.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\include) DEBUG OBJECTEXTEN
+                    -D PRINT(.\Listings\Uart.lst) TABS(2) OBJECT(.\Objects\Uart.obj)
+
+line level    source
+
+   1          #include "all.h" 
+   2          
+   3          bit PrintfFlag;
+   4          bit PrintfFinishFlag;
+   5          bit UartSendFlag = 0; //发送中断标志位
+   6          bit UartReceiveFlag = 0; //接收中断标志位
+   7          
+   8          unsigned char Counter_Value;
+   9          /*
+  10          *函数名称：void Uart0_Init(void)
+  11          *函数功能：Uart0中断初始化
+  12          *入口参数：void
+  13          *出口参数：void
+  14          *****************************************************/
+  15          void Uart0_Init(void)    //选择Timer1作为波特率信号发生器
+  16          {
+  17   1        P1CON &= 0XF3;
+  18   1        P1PH |= 0X0C;  //TX/RX为带上拉输入
+  19   1        SCON = 0X50;     //方式1，允许接收数据
+  20   1        PCON |= 0X80; 
+  21   1        T2CON = 0x00;    //使用定时器1作UART时钟
+  22   1        TMOD = 0X20;     //定时器1  8位自动重载
+  23   1        TMCON = 0X02;    //定时器1   Fsys；
+  24   1        TL1 = 217;    
+  25   1        TH1 = 217;     //UART 波特率24M情况下=38400；
+  26   1        TR1 = 1;     //启动Timer0
+  27   1        EUART = 1;       //允许UART中断
+  28   1        EA = 1;        //开总中断
+  29   1      }
+  30          
+  31          
+  32          
+  33          
+  34          
+  35          void EnablePrintf(void)
+  36          {
+  37   1        PrintfFlag = 1;
+  38   1        TI = 1;
+  39   1      
+  40   1      
+  41   1      }
+  42          
+  43          
+  44          void DisalbePrintf(void)
+  45          {
+  46   1        PrintfFlag  = 0;
+  47   1      
+  48   1      }
+  49          
+  50          
+  51          
+  52          char putchar (char c)  {
+  53   1      
+  54   1        while (!PrintfFinishFlag);
+C51 COMPILER V9.59.0.0   UART                                                              12/20/2020 19:27:48 PAGE 2   
+
+  55   1      
+  56   1        PrintfFinishFlag = 0;
+  57   1      
+  58   1        return (SBUF = c);
+  59   1      
+  60   1      }
+  61          
+  62          
+  63          void UartInt(void) interrupt 4
+  64          {
+  65   1        if(TI)
+  66   1        {
+  67   2          if(PrintfFlag == 0)
+  68   2          {
+  69   3            TI = 0; 
+  70   3            UartSendFlag = 1; 
+  71   3          }     
+  72   2          else
+  73   2          {
+  74   3              TI = 0;
+  75   3              PrintfFinishFlag  = 1;
+  76   3          
+  77   3          }
+  78   2        }
+  79   1        if(RI)
+  80   1        {
+  81   2          RI = 0; 
+  82   2          UartReceiveFlag = 1;
+  83   2        } 
+  84   1      }
+  85          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     74    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      4    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,1 @@
+"code\Adc.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\include) DEBUG OBJECTEXTEND PRINT(.\Listings\Adc.lst) TABS (2) OBJECT(.\Objects\Adc.obj)

@@ -1,0 +1,1 @@
+"code\ScnewMain.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\include) DEBUG OBJECTEXTEND PRINT(.\Listings\ScnewMain.lst) TABS (2) OBJECT(.\Objects\ScnewMain.obj)

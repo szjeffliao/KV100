@@ -1,0 +1,10 @@
+".\Objects\STARTUP.obj",
+".\Objects\Adc.obj",
+".\Objects\iap.obj",
+".\Objects\initialSystem.obj",
+".\Objects\SystemSleep.obj",
+".\Objects\timer.obj",
+".\Objects\Uart.obj",
+".\Objects\returnMain.obj" 
+TO ".\Objects\Kv100_Return" 
+PRINT(".\Listings\Kv100_Return.m51") RAMSIZE(256) 
